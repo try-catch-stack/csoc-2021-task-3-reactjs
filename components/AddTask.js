@@ -1,4 +1,11 @@
 export default function AddTask() {
+  const addTask = () => {
+    /**
+     * @todo Complete this function.
+     * @todo 1. Send the request to add the task to the backend server.
+     * @todo 2. Add the task in the dom.
+     */
+  }
   return (
     <div className='flex items-center max-w-sm mt-24'>
       <input
@@ -9,7 +16,7 @@ export default function AddTask() {
       <button
         type='button'
         className='todo-add-task bg-transparent hover:bg-green-500 text-green-700 text-sm hover:text-white px-3 py-2 border border-green-500 hover:border-transparent rounded'
-        onClick='addTask()'
+        onClick={addTask}
       >
         Add Task
       </button>

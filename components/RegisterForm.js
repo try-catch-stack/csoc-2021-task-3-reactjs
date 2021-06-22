@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import axios from 'axios'
 
 export default function Register() {
   const [firstName, setFirstName] = useState('')
@@ -7,9 +8,15 @@ export default function Register() {
   const [password, setPassword] = useState('')
   const [username, setUsername] = useState('')
 
-  const submitHandler = (e) => {
-    e.preventDefault()
+  const API_BASE_URL = 'https://todo-app-csoc.herokuapp.com/'
 
+  const registerFieldsAreValid = (
+    firstName,
+    lastName,
+    email,
+    username,
+    password
+  ) => {
     if (
       firstName === '' ||
       lastName === '' ||
@@ -18,13 +25,45 @@ export default function Register() {
       password === ''
     ) {
       console.log('Please fill all the fields correctly.')
-      return
+      return false
     }
     if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
       console.log('Please enter a valid email address.')
-      return
+      return false
     }
-    console.log('Registration Successfull')
+    return true
+  }
+
+  const register = (e) => {
+    e.preventDefault()
+
+    if (
+      registerFieldsAreValid(firstName, lastName, email, username, password)
+    ) {
+      console.log('Please wait...')
+
+      const dataForApiRequest = {
+        name: firstName + ' ' + lastName,
+        email: email,
+        username: username,
+        password: password,
+      }
+
+      axios({
+        url: API_BASE_URL + 'auth/register/',
+        method: 'post',
+        data: dataForApiRequest,
+      })
+        .then(function ({ data, status }) {
+          localStorage.setItem('token', data.token)
+          window.location.href = '/'
+        })
+        .catch(function (err) {
+          console.log(
+            'An account using same email or username is already created'
+          )
+        })
+    }
   }
 
   return (
@@ -84,7 +123,7 @@ export default function Register() {
           <button
             type='submit'
             className='w-full text-center py-3 rounded bg-transparent text-green-500 hover:text-white hover:bg-green-500 border border-green-500 hover:border-transparent focus:outline-none my-1'
-            onClick={submitHandler}
+            onClick={register}
           >
             Register
           </button>
