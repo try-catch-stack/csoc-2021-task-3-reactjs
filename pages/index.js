@@ -1,48 +1,23 @@
-import Nav from '../components/Nav'
 import TodoListItem from '../components/TodoListItem'
 import AddTask from '../components/AddTask'
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import axios from '../utils/axios'
+import { useAuth } from '../context/auth'
 
 export default function Home() {
-
-  const [profileName, setProfileName] = useState('')
-  const [avatarImage, setAvatarImage] = useState('')
+  const { token } = useAuth()
+  const [tasks, setTasks] = useState([])
 
   function getTasks() {
     /***
-     * @todo Fetch the tasks created by the user and display them in the dom.
+     * @todo Fetch the tasks created by the user.
+     * @todo Set the tasks state and display them in the using TodoListItem component
+     * The user token can be accessed from the context using useAuth() from /context/auth.js
      */
   }
 
-  useEffect(() => {
-    axios
-      .get('auth/profile/', {
-        headers: {
-          Authorization: 'Token ' + localStorage.getItem('token'),
-        },
-      })
-      .then((response) => {
-        setAvatarImage(
-          'https://ui-avatars.com/api/?name=' +
-            response.data.name +
-            '&background=fff&size=33&color=007bff'
-        )
-        setProfileName(response.data.name)
-        getTasks()
-      })
-      .catch((error) => {
-        console.log('Some error occurred')
-      })
-  }, [])
-
-  /**
-   * @todo Fetch Task Items form backend and render them using loop
-   */
-
   return (
     <div>
-      <Nav profileName={profileName} avatarImage={avatarImage} />
       <center>
         <AddTask />
         <ul className='flex-col mt-9 max-w-sm mb-3 '>

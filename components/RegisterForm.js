@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import axios from '../utils/axios'
+import { useAuth } from '../context/auth'
 import { useRouter } from 'next/router'
 
 export default function Register() {
+  const { setToken } = useAuth()
   const router = useRouter()
 
   const [firstName, setFirstName] = useState('')
@@ -55,8 +57,8 @@ export default function Register() {
         dataForApiRequest,
       )
         .then(function ({ data, status }) {
-          localStorage.setItem('token', data.token)
-          router.push('/');
+          setToken(data.token)
+          router.push('/')
         })
         .catch(function (err) {
           console.log(
