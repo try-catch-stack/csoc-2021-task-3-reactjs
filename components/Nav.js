@@ -1,15 +1,17 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 /**
  *
  * @todo Condtionally render login/register and Profile name in NavBar
  */
 
 export default function Nav({ profileName = 'Loading', avatarImage = '#' }) {
+  const router = useRouter()
   const logout = () => {
     localStorage.removeItem('token')
-    window.location.href = '/login/'
+    router.push('/login')
   }
 
   return (

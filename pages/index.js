@@ -2,10 +2,9 @@ import Nav from '../components/Nav'
 import TodoListItem from '../components/TodoListItem'
 import AddTask from '../components/AddTask'
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import axios from '../utils/axios'
 
 export default function Home() {
-  const API_BASE_URL = 'https://todo-app-csoc.herokuapp.com/'
 
   const [profileName, setProfileName] = useState('')
   const [avatarImage, setAvatarImage] = useState('')
@@ -18,7 +17,7 @@ export default function Home() {
 
   useEffect(() => {
     axios
-      .get(API_BASE_URL + 'auth/profile/', {
+      .get('auth/profile/', {
         headers: {
           Authorization: 'Token ' + localStorage.getItem('token'),
         },

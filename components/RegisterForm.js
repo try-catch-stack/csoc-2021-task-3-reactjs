@@ -1,14 +1,15 @@
 import React, { useState } from 'react'
-import axios from 'axios'
+import axios from '../utils/axios'
+import { useRouter } from 'next/router'
 
 export default function Register() {
+  const router = useRouter()
+
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [username, setUsername] = useState('')
-
-  const API_BASE_URL = 'https://todo-app-csoc.herokuapp.com/'
 
   const registerFieldsAreValid = (
     firstName,
@@ -49,14 +50,13 @@ export default function Register() {
         password: password,
       }
 
-      axios({
-        url: API_BASE_URL + 'auth/register/',
-        method: 'post',
-        data: dataForApiRequest,
-      })
+      axios.post(
+        'auth/register/',
+        dataForApiRequest,
+      )
         .then(function ({ data, status }) {
           localStorage.setItem('token', data.token)
-          window.location.href = '/'
+          router.push('/');
         })
         .catch(function (err) {
           console.log(
