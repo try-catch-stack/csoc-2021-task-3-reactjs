@@ -4,6 +4,7 @@ export default function RegisterForm() {
      * @todo Complete this function.
      * @todo 1. Write code for form validation.
      * @todo 2. Fetch the auth token from backend and login the user.
+     * @todo 3. Set the token in the context (See context/auth.js)
      */
   }
 
