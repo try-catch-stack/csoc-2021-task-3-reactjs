@@ -13,6 +13,7 @@ export default function Home() {
   const router = useRouter()
   const [isLoggedIn,setLoggedIn] = useState(false)
 
+
   function getTasks() {
     axios({
       headers: {
@@ -35,15 +36,18 @@ export default function Home() {
 
   }
 
+
+
   useEffect(() => {
-    if(token!="null"){
+    
+    if(token!="null"&&token!=undefined){
       getTasks()
       setLoggedIn(true)
     }
 
     const {pathname} = Router
-        if(pathname == '/' && token=="null"){
-            Router.push('/login')
+        if(pathname == '/' && (token=="null" || token==undefined)){
+            router.push('/login')
         }
   }, [])
 
